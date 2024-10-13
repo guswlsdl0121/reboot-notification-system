@@ -30,7 +30,7 @@ POST /admin/products/{productId}/notifications/re-stock
 
 - 상품별 재입고 알림 히스토리
 - 서버가 알림 전송 요청을 받으면, 이곳에 알림이 저장된다.
-- 알림의 상태가 같이 관리되어야 한다.
+- 제품의 재입고 회차, 알림의 상태가 같이 관리되어야 한다.
 
 <br>
 
