@@ -2,10 +2,12 @@ package com.reboot_course.notification_system.domain.product.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @Entity
 @Getter
 @Builder
@@ -32,5 +34,13 @@ public class Product {
 
     public boolean isOutOfStock() {
         return quantity < 1;
+    }
+
+    public boolean decreaseQuantity() {
+        if (this.quantity < 1) {
+            return false;
+        }
+        this.quantity--;
+        return true;
     }
 }

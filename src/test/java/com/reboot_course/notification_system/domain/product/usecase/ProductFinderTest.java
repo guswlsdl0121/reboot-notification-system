@@ -1,8 +1,7 @@
-package com.reboot_course.notification_system.domain.usecase;
+package com.reboot_course.notification_system.domain.product.usecase;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
-import com.reboot_course.notification_system.domain.product.repository.ProductRepository;
-import com.reboot_course.notification_system.domain.product.usecase.ProductFinder;
+import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

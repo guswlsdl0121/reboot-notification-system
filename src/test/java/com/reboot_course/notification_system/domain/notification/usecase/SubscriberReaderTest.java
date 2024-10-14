@@ -1,7 +1,7 @@
-package com.reboot_course.notification_system.domain.usecase;
+package com.reboot_course.notification_system.domain.notification.usecase;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
-import com.reboot_course.notification_system.domain.product.repository.ProductRepository;
+import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import com.reboot_course.notification_system.domain.subscriber.entity.Subscriber;
 import com.reboot_course.notification_system.domain.subscriber.repository.SubscriberRepository;
 import com.reboot_course.notification_system.domain.subscriber.usecase.SubscriberReader;
