@@ -1,7 +1,8 @@
 package com.reboot_course.notification_system.domain.subscription.usecase;
 
-import com.reboot_course.notification_system.domain.notification.repository.NotificationSubscriptionRepository;
+import com.reboot_course.notification_system.common.exception.exception.NoSubscribersFoundException;
 import com.reboot_course.notification_system.domain.subscription.entity.NotificationSubscription;
+import com.reboot_course.notification_system.domain.subscription.repository.NotificationSubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,11 +14,17 @@ import java.util.List;
 public class SubscriptionReader {
     private final NotificationSubscriptionRepository subscriptionRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Long> getUserIdsForProduct(Long productId) {
-        return subscriptionRepository.findAllByProductIdOrderByCreatedAtAsc(productId)
+        List<Long> userIds = subscriptionRepository.findAllByProductIdOrderByCreatedAtAsc(productId)
                 .stream()
                 .map(NotificationSubscription::getUserId)
                 .toList();
+
+        if (userIds.isEmpty()) {
+            throw new NoSubscribersFoundException(productId);
+        }
+
+        return userIds;
     }
 }

@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.notification.repository;
+package com.reboot_course.notification_system.domain.subscription.repository;
 
 import com.reboot_course.notification_system.domain.subscription.entity.NotificationSubscription;
 import org.springframework.data.jpa.repository.JpaRepository;
