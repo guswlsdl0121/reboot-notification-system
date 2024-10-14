@@ -1,8 +1,8 @@
 package com.reboot_course.notification_system.domain.product.cache;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
-import com.reboot_course.notification_system.domain.product.repository.cache.QuantityCache;
-import com.reboot_course.notification_system.domain.product.repository.cache.QuantityCacheRepository;
+import com.reboot_course.notification_system.domain.product.repository.cache.ProductCache;
+import com.reboot_course.notification_system.domain.product.repository.cache.ProductCachedRepository;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +15,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@Import({QuantityCache.class, QuantityCacheRepository.class})
-class QuantityCacheRepositoryTest {
+@Import({ProductCache.class, ProductCachedRepository.class})
+class ProductCacheRepositoryTest {
 
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
-    private QuantityCacheRepository quantityCacheRepository;
+    private ProductCachedRepository productCachedRepository;
 
     @Test
     void t1() throws InterruptedException {
@@ -35,7 +35,7 @@ class QuantityCacheRepositoryTest {
         Long productId = product.getId();
 
         // 캐시 초기화
-        quantityCacheRepository.save(productId, 100);
+        productCachedRepository.save(productId, product);
 
         // 10번의 구매 시뮬레이션
         for (int i = 0; i < 10; i++) {
@@ -52,10 +52,10 @@ class QuantityCacheRepositoryTest {
         // 최종 상태 확인
         Product finalProduct = productRepository.findById(productId).orElseThrow();
         int finalDbQuantity = finalProduct.getQuantity();
-        int finalCachedQuantity = quantityCacheRepository.get(productId);
+        Product finalCachedProduct = productCachedRepository.get(productId);
 
         // 검증
-        assertThat(finalDbQuantity).isEqualTo(90);
-        assertThat(finalCachedQuantity).isEqualTo(90);
+        assertThat(finalDbQuantity).isEqualTo(finalCachedProduct.getQuantity());
+        assertThat(finalCachedProduct.getQuantity()).isEqualTo(90);
     }
 }

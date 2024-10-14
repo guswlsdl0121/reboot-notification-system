@@ -4,7 +4,7 @@ import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import com.reboot_course.notification_system.domain.subscriber.entity.Subscriber;
 import com.reboot_course.notification_system.domain.subscriber.repository.SubscriberRepository;
-import com.reboot_course.notification_system.domain.subscriber.usecase.SubscriberReader;
+import com.reboot_course.notification_system.domain.subscriber.usecase.SubscriberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
-@Import(SubscriberReader.class)
-class SubscriberReaderTest {
+@Import(SubscriberService.class)
+class SubscriberServiceTest {
     @Autowired
     private SubscriberRepository subscriptionRepository;
 
@@ -28,7 +28,7 @@ class SubscriberReaderTest {
     private ProductRepository productRepository;
 
     @Autowired
-    private SubscriberReader subscriberReader;
+    private SubscriberService subscriberService;
 
     private Product testProduct;
 
@@ -53,7 +53,7 @@ class SubscriberReaderTest {
         subscriptionRepository.saveAll(List.of(sub1, sub2, sub3));
 
         // When
-        List<Long> result = subscriberReader.getUserIdsForProduct(testProduct.getId());
+        List<Long> result = subscriberService.getUserIdsForProduct(testProduct.getId());
 
         // Then
         assertEquals(3, result.size());
@@ -65,7 +65,7 @@ class SubscriberReaderTest {
     void t2() {
         // When & Then
         assertThrows(IllegalStateException.class, () ->
-                subscriberReader.getUserIdsForProduct(testProduct.getId())
+                subscriberService.getUserIdsForProduct(testProduct.getId())
         );
     }
 

@@ -1,6 +1,6 @@
 package com.reboot_course.notification_system.domain.notification.controller;
 
-import com.reboot_course.notification_system.domain.notification.service.NotificationService;
+import com.reboot_course.notification_system.domain.notification.service.NotificationServiceFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class NotificationController {
-    private final NotificationService notificationService;
+    private final NotificationServiceFacade notificationServiceFacade;
 
 
     @PostMapping("/{productId}/notifications/re-stock")
     public ResponseEntity<String> sendNotification(@PathVariable Long productId) {
-        notificationService.sendNotifications(productId);
+        notificationServiceFacade.sendNotifications(productId);
         return ResponseEntity.ok().build();
     }
 

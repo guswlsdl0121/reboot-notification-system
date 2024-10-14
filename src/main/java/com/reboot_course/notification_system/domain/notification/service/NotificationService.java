@@ -1,32 +1,31 @@
 package com.reboot_course.notification_system.domain.notification.service;
 
-import com.reboot_course.notification_system.common.ratelimit.RateLimiter;
-import com.reboot_course.notification_system.common.ratelimit.TaskProcessor;
-import com.reboot_course.notification_system.domain.product.entity.Product;
-import com.reboot_course.notification_system.domain.product.usecase.ProductFinder;
-import com.reboot_course.notification_system.domain.subscriber.usecase.SubscriberReader;
+import com.reboot_course.notification_system.domain.notification.entity.NotificationHistory;
+import com.reboot_course.notification_system.domain.notification.entity.NotificationStatus;
+import com.reboot_course.notification_system.domain.notification.usecase.NotificationHistoryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
-    private final RateLimiter rateLimiter;
-    private final SubscriberReader subscriberReader;
-    private final ProductFinder productFinder;
-
-    public void sendNotifications(Long productId) {
-        Product product = productFinder.fetchOneAndUpdateRestockCount(productId);
-        List<Long> userIds = subscriberReader.getUserIdsForProduct(productId);
-
-        rateLimiter.process(new TaskProcessor(productId, userIds, this::sendNotification));
-    }
+    private final NotificationHistoryService historyService;
+    private final NotificationManager notificationManager;
 
     @Transactional
     public void sendNotification(Long productId, Long userId) {
-        System.out.println("Sending notification for product " + productId + " to user " + userId);
+        NotificationHistory history = historyService.createHistory(productId, userId);
+
+        try {
+            if (history.getNotificationStatus() == NotificationStatus.IN_PROGRESS) {
+                notificationManager.send(history);
+                historyService.completeHistory(history);
+            }
+        } catch (Exception e) {
+            historyService.cancelHistoryByError(history);
+        }
     }
 }

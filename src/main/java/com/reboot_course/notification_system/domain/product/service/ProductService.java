@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.product.usecase;
+package com.reboot_course.notification_system.domain.product.service;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class ProductFinder {
+public class ProductService {
     private final ProductRepository productRepository;
 
     @Transactional

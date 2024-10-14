@@ -14,11 +14,12 @@ CREATE TABLE IF NOT EXISTS product
 
 CREATE TABLE IF NOT EXISTS product_notification_history
 (
-    id              BIGINT AUTO_INCREMENT                                                          NOT NULL PRIMARY KEY,
-    created_at      DATETIME(6)                                                                    NOT NULL,
-    restock_version INT                                                                            NOT NULL,
-    status          ENUM ('CANCELED_BY_ERROR', 'CANCELED_BY_SOLD_OUT', 'COMPLETED', 'IN_PROGRESS') NOT NULL,
-    product_id      BIGINT                                                                         NOT NULL,
+    id                BIGINT AUTO_INCREMENT                                                          NOT NULL PRIMARY KEY,
+    created_at        DATETIME(6)                                                                    NOT NULL,
+    restock_version   INT                                                                            NOT NULL,
+    status            ENUM ('CANCELED_BY_ERROR', 'CANCELED_BY_SOLD_OUT', 'COMPLETED', 'IN_PROGRESS') NOT NULL,
+    last_send_user_id BIGINT                                                                         NOT NULL,
+    product_id        BIGINT                                                                         NOT NULL,
     INDEX idx_pnh_pid (product_id)
 );
 

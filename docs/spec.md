@@ -3,13 +3,17 @@
 ## 1. API 스펙
 
 #### 1. 재입고 알림 전송 API
+
 ```http request
 POST  /products/{productId}/notifications/re-stock
 ```
+
 <br>
 
 #### 2. 재입고 알림 전송 API (선택)
+
 해당 API는 어떠한 이유로 알림 전송에 실패했을 때, 다시 보내는 API이다.
+
 ```http request
 POST /admin/products/{productId}/notifications/re-stock
 ```
@@ -18,6 +22,7 @@ POST /admin/products/{productId}/notifications/re-stock
 <br>
 
 ## 2. Table 설계
+
 **Product**
 
 - 상품

@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.product.usecase;
+package com.reboot_course.notification_system.domain.product.service;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
@@ -13,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
-@Import({ProductFinder.class})
-class ProductFinderTest {
+@Import({ProductService.class})
+class ProductServiceTest {
     @Autowired
-    private ProductFinder productFinder;
+    private ProductService productService;
     @Autowired
     private ProductRepository productRepository;
 
@@ -30,7 +30,7 @@ class ProductFinderTest {
         int initialVersion = product.getRestockVersion();
 
         // When
-        Product result = productFinder.fetchOneAndUpdateRestockCount(productId);
+        Product result = productService.fetchOneAndUpdateRestockCount(productId);
 
         // Then
         assertEquals(initialVersion + 1, result.getRestockVersion());
@@ -39,14 +39,14 @@ class ProductFinderTest {
     @Test
     @DisplayName("id로 엔티티를 못찾으면, 예외를 던져야 한다.")
     void t2() {
-        assertThrows(EntityNotFoundException.class, () -> productFinder.fetchOneAndUpdateRestockCount(9909L));
+        assertThrows(EntityNotFoundException.class, () -> productService.fetchOneAndUpdateRestockCount(9909L));
     }
 
     @Test
     @DisplayName("만약 재고가 없다면, 예외를 던져야 한다.")
     void t3() {
         createProduct(2L, 0);
-        assertThrows(IllegalStateException.class, () -> productFinder.fetchOneAndUpdateRestockCount(2L));
+        assertThrows(IllegalStateException.class, () -> productService.fetchOneAndUpdateRestockCount(2L));
     }
 
     private Product createProduct(Long productId, int quantity) {

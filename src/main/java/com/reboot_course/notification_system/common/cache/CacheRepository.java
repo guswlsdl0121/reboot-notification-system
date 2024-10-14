@@ -2,14 +2,14 @@ package com.reboot_course.notification_system.common.cache;
 
 import java.util.Map;
 
-public interface CacheRepository<T extends Cache<Long, Integer>> {
-    void save(Long key, int value);
+public interface CacheRepository<K, V> {
+    void save(K key, V value);
 
-    int get(Long key);
+    V get(K key);
 
-    void delete(Long key);
+    void delete(K key);
 
-    Map<Long, Integer> getAll();
+    Map<K, V> getAll();
 
     void syncWithDB();
 }

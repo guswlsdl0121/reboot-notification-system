@@ -1,15 +1,13 @@
 package com.reboot_course.notification_system.domain.notification.service.ratelimit;
 
-import com.reboot_course.notification_system.config.NotificationTestConfiguration;
-import com.reboot_course.notification_system.domain.notification.service.NotificationService;
+import com.reboot_course.notification_system.domain.notification.service.NotificationServiceFacade;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import com.reboot_course.notification_system.domain.subscriber.entity.Subscriber;
 import com.reboot_course.notification_system.domain.subscriber.repository.SubscriberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
@@ -18,9 +16,8 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles("test")
-@Import({NotificationTestConfiguration.class})
 public abstract class AbstractRateLimitTest {
     @Autowired
     protected ProductRepository productRepository;
@@ -29,7 +26,7 @@ public abstract class AbstractRateLimitTest {
     protected SubscriberRepository subscriptionRepository;
 
     @Autowired
-    protected NotificationService notificationService;
+    protected NotificationServiceFacade notificationServiceFacade;
 
     protected Product createAndSaveProduct() {
         Product product = Product.builder().quantity(100).restockVersion(0).build();

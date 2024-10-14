@@ -10,7 +10,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class SubscriberReader {
+public class SubscriberService {
     private final SubscriberRepository subscriptionRepository;
 
     @Transactional(readOnly = true)
