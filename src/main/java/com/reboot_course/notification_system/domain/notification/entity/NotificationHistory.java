@@ -2,10 +2,15 @@ package com.reboot_course.notification_system.domain.notification.entity;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "product_notification_history")
 public class NotificationHistory {
     @Id
@@ -17,7 +22,7 @@ public class NotificationHistory {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private NotificationStatus status;
+    private NotificationStatus notificationStatus;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
