@@ -21,7 +21,7 @@ public class NotificationHistory {
     private Integer restockVersion;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private NotificationStatus notificationStatus;
 
     @Column(nullable = false)

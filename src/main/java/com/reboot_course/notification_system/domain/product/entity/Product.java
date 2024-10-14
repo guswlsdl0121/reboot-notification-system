@@ -25,4 +25,8 @@ public class Product {
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    public void updateRestockVersion() {
+        ++restockVersion;
+    }
 }

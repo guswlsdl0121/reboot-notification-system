@@ -15,7 +15,6 @@ public class NotificationController {
 
     @PostMapping("/{productId}/notifications/re-stock")
     public ResponseEntity<String> sendNotification(@PathVariable Long productId) {
-        // TODO: 재입고 알림 전송 로직 구현
         notificationService.sendNotifications(productId);
         return ResponseEntity.ok().build();
     }
