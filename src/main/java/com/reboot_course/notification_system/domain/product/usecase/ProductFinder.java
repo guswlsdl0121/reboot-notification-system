@@ -17,8 +17,11 @@ public class ProductFinder {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(productId)));
 
-        product.updateRestockVersion();
+        if (product.isOutOfStock()) {
+            throw new IllegalStateException(String.format("현재 해당 상품의 재고가 없습니다. (id : %d)", productId));
+        }
 
+        product.updateRestockVersion();
         return product;
     }
 }

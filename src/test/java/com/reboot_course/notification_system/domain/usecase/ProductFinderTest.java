@@ -26,12 +26,7 @@ class ProductFinderTest {
     void t1() {
         // Given
         Long productId = 1L;
-        Product product = Product.builder()
-                .id(productId)
-                .quantity(10)
-                .restockVersion(0)
-                .build();
-        productRepository.save(product);
+        Product product = createProduct(productId, 10);
 
         int initialVersion = product.getRestockVersion();
 
@@ -46,5 +41,21 @@ class ProductFinderTest {
     @DisplayName("id로 엔티티를 못찾으면, 예외를 던져야 한다.")
     void t2() {
         assertThrows(EntityNotFoundException.class, () -> productFinder.fetchOneAndUpdateRestockCount(9909L));
+    }
+
+    @Test
+    @DisplayName("만약 재고가 없다면, 예외를 던져야 한다.")
+    void t3() {
+        createProduct(2L, 0);
+        assertThrows(IllegalStateException.class, () -> productFinder.fetchOneAndUpdateRestockCount(2L));
+    }
+
+    private Product createProduct(Long productId, int quantity) {
+        Product product = Product.builder()
+                .id(productId)
+                .quantity(quantity)
+                .restockVersion(0)
+                .build();
+        return productRepository.save(product);
     }
 }

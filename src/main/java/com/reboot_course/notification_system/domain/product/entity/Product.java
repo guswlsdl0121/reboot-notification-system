@@ -29,4 +29,8 @@ public class Product {
     public void updateRestockVersion() {
         ++restockVersion;
     }
+
+    public boolean isOutOfStock() {
+        return quantity < 1;
+    }
 }
