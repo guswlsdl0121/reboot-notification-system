@@ -49,6 +49,7 @@ public class QuantityCacheRepository implements CacheRepository<QuantityCache> {
         return cache.decrease(productId);
     }
 
+    // 구매와 같은 외부 요인에 의해 너무 빨리 수량이 줄어들면, 캐시의 역할을 제대로 못하지 않을까?
     @Override
     @Scheduled(fixedRate = 100)
     @Transactional
@@ -59,7 +60,7 @@ public class QuantityCacheRepository implements CacheRepository<QuantityCache> {
         //최신 상품 수량 가져오기
         List<Object[]> dbResults = productRepository.findQuantitiesByIds(productIds);
         
-        //Map에 캐시에 값 삽입 
+        //Map에 캐시에 값 삽입
         for (Object[] result : dbResults) {
             Long productId = (Long) result[0];
             Integer dbQuantity = ((Number) result[1]).intValue();
