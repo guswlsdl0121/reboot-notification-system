@@ -27,7 +27,20 @@ public class NotificationHistory {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    private Long lastSendUserId;
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Product product;
+
+    public void completed() {
+        this.notificationStatus = NotificationStatus.COMPLETED;
+    }
+
+    public void cancelByError() {
+        this.notificationStatus = NotificationStatus.CANCELED_BY_ERROR;
+    }
+
+    public Long getProductId() {
+        return this.product.getId();
+    }
 }
