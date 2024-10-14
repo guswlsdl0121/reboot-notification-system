@@ -1,11 +1,11 @@
 package com.reboot_course.notification_system.domain.notification.service.ratelimit;
 
 import com.reboot_course.notification_system.domain.notification.config.NotificationTestConfiguration;
-import com.reboot_course.notification_system.domain.notification.repository.NotificationSubscriptionRepository;
 import com.reboot_course.notification_system.domain.notification.service.NotificationService;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.ProductRepository;
 import com.reboot_course.notification_system.domain.subscription.entity.NotificationSubscription;
+import com.reboot_course.notification_system.domain.subscription.repository.NotificationSubscriptionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

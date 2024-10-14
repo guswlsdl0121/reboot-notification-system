@@ -2,10 +2,10 @@ package com.reboot_course.notification_system.domain.notification.config;
 
 import com.reboot_course.notification_system.common.ratelimit.QueueRateLimiter;
 import com.reboot_course.notification_system.common.ratelimit.RateLimiter;
-import com.reboot_course.notification_system.domain.notification.repository.NotificationSubscriptionRepository;
 import com.reboot_course.notification_system.domain.notification.service.NotificationService;
 import com.reboot_course.notification_system.domain.product.repository.ProductRepository;
 import com.reboot_course.notification_system.domain.product.usecase.ProductFinder;
+import com.reboot_course.notification_system.domain.subscription.repository.NotificationSubscriptionRepository;
 import com.reboot_course.notification_system.domain.subscription.usecase.SubscriptionReader;
 import org.springframework.context.annotation.Bean;
 

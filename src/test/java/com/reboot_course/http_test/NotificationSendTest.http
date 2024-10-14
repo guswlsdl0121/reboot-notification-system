@@ -2,7 +2,7 @@
 POST http://localhost:8080/products/999999/notifications/re-stock
 
 > {%
-    client.test("Response status should be 404", function() {
+    client.test("Response status should be 404", function () {
         client.assert(response.status === 404);
     });
 %}
