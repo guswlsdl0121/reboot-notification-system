@@ -20,8 +20,8 @@ public class NotificationService {
 
     public void sendNotifications(Long productId) {
         Product product = productFinder.fetchOneAndUpdateRestockCount(productId);
-
         List<Long> userIds = subscriptionReader.getUserIdsForProduct(productId);
+
         rateLimiter.process(new TaskProcessor(productId, userIds, this::sendNotification));
     }
 

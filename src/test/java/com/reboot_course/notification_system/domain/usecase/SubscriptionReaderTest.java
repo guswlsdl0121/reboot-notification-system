@@ -1,6 +1,5 @@
 package com.reboot_course.notification_system.domain.usecase;
 
-import com.reboot_course.notification_system.common.exception.exception.NoSubscribersFoundException;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.ProductRepository;
 import com.reboot_course.notification_system.domain.subscription.entity.NotificationSubscription;
@@ -64,7 +63,7 @@ class SubscriptionReaderTest {
     @DisplayName("특정 상품의 알림 구독자가 없는 경우 예외를 던져야 한다.")
     void t2() {
         // When & Then
-        assertThrows(NoSubscribersFoundException.class, () ->
+        assertThrows(IllegalStateException.class, () ->
                 subscriptionReader.getUserIdsForProduct(testProduct.getId())
         );
     }

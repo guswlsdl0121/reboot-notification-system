@@ -1,6 +1,5 @@
 package com.reboot_course.notification_system.domain.subscription.usecase;
 
-import com.reboot_course.notification_system.common.exception.exception.NoSubscribersFoundException;
 import com.reboot_course.notification_system.domain.subscription.entity.NotificationSubscription;
 import com.reboot_course.notification_system.domain.subscription.repository.NotificationSubscriptionRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class SubscriptionReader {
                 .toList();
 
         if (userIds.isEmpty()) {
-            throw new NoSubscribersFoundException(productId);
+            throw new IllegalStateException(String.format("현재 해당 상품의 알림 신청자가 없습니다. (id : %d)", productId));
         }
 
         return userIds;

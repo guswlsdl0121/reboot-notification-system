@@ -1,7 +1,5 @@
 package com.reboot_course.notification_system.common.exception;
 
-import com.reboot_course.notification_system.common.exception.dto.ErrorResponse;
-import com.reboot_course.notification_system.common.exception.exception.NoSubscribersFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +19,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(NoSubscribersFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNoSubscriptionException(EntityNotFoundException e) {
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException e) {
         ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                e.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request",
                 e.getMessage()
         );
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }
