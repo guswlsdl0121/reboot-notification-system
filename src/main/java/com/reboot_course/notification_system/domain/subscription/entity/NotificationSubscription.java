@@ -1,12 +1,17 @@
-package com.reboot_course.notification_system.domain.notification.entity;
+package com.reboot_course.notification_system.domain.subscription.entity;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "product_user_notification")
 public class NotificationSubscription {
     @Id

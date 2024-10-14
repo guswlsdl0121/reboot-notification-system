@@ -1,11 +1,16 @@
 package com.reboot_course.notification_system.domain.product.entity;
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.CreatedDate;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +20,9 @@ public class Product {
     private Integer quantity;
 
     @Column(nullable = false)
-    private Integer restockVersion;
+    private Integer restockVersion = 0;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 }
