@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.subscription.entity;
+package com.reboot_course.notification_system.domain.subscriber.entity;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "product_user_notification")
-public class NotificationSubscription {
+public class Subscriber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

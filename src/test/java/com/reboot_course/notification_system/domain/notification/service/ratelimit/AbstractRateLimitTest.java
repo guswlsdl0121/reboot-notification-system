@@ -4,8 +4,8 @@ import com.reboot_course.notification_system.domain.notification.config.Notifica
 import com.reboot_course.notification_system.domain.notification.service.NotificationService;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.ProductRepository;
-import com.reboot_course.notification_system.domain.subscription.entity.NotificationSubscription;
-import com.reboot_course.notification_system.domain.subscription.repository.NotificationSubscriptionRepository;
+import com.reboot_course.notification_system.domain.subscriber.entity.Subscriber;
+import com.reboot_course.notification_system.domain.subscriber.repository.SubscriberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -26,7 +26,7 @@ public abstract class AbstractRateLimitTest {
     protected ProductRepository productRepository;
 
     @Autowired
-    protected NotificationSubscriptionRepository subscriptionRepository;
+    protected SubscriberRepository subscriptionRepository;
 
     @Autowired
     protected NotificationService notificationService;
@@ -38,7 +38,7 @@ public abstract class AbstractRateLimitTest {
 
     protected void createSubscriptions(Product product, int count) {
         for (int i = 0; i < count; i++) {
-            NotificationSubscription subscription = NotificationSubscription.builder()
+            Subscriber subscription = Subscriber.builder()
                     .userId((long) i)
                     .product(product)
                     .createdAt(LocalDateTime.now().plusSeconds(i))
