@@ -15,11 +15,13 @@ public class NotificationCacheManager {
     private final HistoryCacheRepository historyCacheRepository;
 
     public void initializeProcess(Product product) {
+        productCachedRepository.startSyncScheduler(500);
         productCachedRepository.save(product.getId(), product);
         batchQueueRepository.clear();
     }
 
     public void finalizeProcess(Long productId) {
+        productCachedRepository.stopSyncScheduler();
         productCachedRepository.delete(productId);
         historyCacheRepository.delete(productId);
         batchQueueRepository.clear();

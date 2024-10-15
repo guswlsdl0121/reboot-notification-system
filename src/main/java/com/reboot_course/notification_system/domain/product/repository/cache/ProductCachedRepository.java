@@ -1,5 +1,6 @@
 package com.reboot_course.notification_system.domain.product.repository.cache;
 
+import com.reboot_course.notification_system.config.SchedulerConfig;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import com.reboot_course.notification_system.infra.cache.Cache;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class ProductCachedRepository implements CacheRepository<Long, Product> {
     private final Cache<Long, Product> cache;
     private final ProductRepository dbRepository;
+    private final SchedulerConfig schedulerConfig;
+
 
     @Override
     public void save(Long key, Product product) {
@@ -43,13 +46,7 @@ public class ProductCachedRepository implements CacheRepository<Long, Product> {
         cache.remove(key);
     }
 
-    @Override
-    public Map<Long, Product> getAll() {
-        return cache.getAll();
-    }
 
-    @Override
-    @Scheduled(fixedRate = 100)
     @Transactional
     public void syncWithDB() {
         Map<Long, Product> cachedProducts = cache.getAll();
@@ -60,5 +57,16 @@ public class ProductCachedRepository implements CacheRepository<Long, Product> {
         for (Product product : dbProducts) {
             cache.set(product.getId(), product);
         }
+    }
+
+    public void startSyncScheduler(int duration) {
+        schedulerConfig.startSyncScheduler(this::syncWithDB, duration);
+    }
+
+    public void stopSyncScheduler() {
+        schedulerConfig.stopSyncScheduler();
+    }
+    public void clear() {
+        cache.clear();
     }
 }
