@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +22,7 @@ public class CompletedNotificationService {
         batchQueueRepository.add(completedNotification);
     }
 
-    public List<NotificationCompleted> getAllCompletedNotifications() {
-        return batchQueueRepository.getAll();
-    }
-
     public void saveAll() {
-        batchQueueRepository.saveAndClear();
+        batchQueueRepository.saveAll();
     }
 }

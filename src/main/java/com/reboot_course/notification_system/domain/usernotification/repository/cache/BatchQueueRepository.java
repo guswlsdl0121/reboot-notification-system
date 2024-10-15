@@ -17,11 +17,7 @@ public class BatchQueueRepository {
         batchQueue.add(notification);
     }
 
-    public List<NotificationCompleted> getAll() {
-        return batchQueue.getAll();
-    }
-
-    public void saveAndClear() {
+    public void saveAll() {
         List<NotificationCompleted> completedNotifications = batchQueue.getAll();
         if (!completedNotifications.isEmpty()) {
             notificationCompletedRepository.saveAll(completedNotifications);
