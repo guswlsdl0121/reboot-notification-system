@@ -24,4 +24,16 @@ public class ProductService {
         product.updateRestockVersion();
         return product;
     }
+
+    @Transactional
+    public Product fetchOne(Long productId) {
+        Product product = productDBRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException(String.valueOf(productId)));
+
+        if (product.isOutOfStock()) {
+            throw new IllegalStateException(String.format("현재 해당 상품의 재고가 없습니다. (id : %d)", productId));
+        }
+
+        return product;
+    }
 }

@@ -21,8 +21,7 @@ public class NotificationController {
 
     @PostMapping("/admin/{productId}/notifications/re-stock")
     public ResponseEntity<String> resendNotification(@PathVariable Long productId) {
-        // TODO: 관리자용 재입고 알림 재전송 로직 구현
-        // notificationService.resendRestockNotification(productId);
+        notificationSystemService.resendRestockNotification(productId);
         return ResponseEntity.ok().build();
     }
 }

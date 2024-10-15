@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SubscriberRepository extends JpaRepository<Subscriber, Long> {
     List<Subscriber> findAllByProductIdOrderByCreatedAtAsc(Long productId);
+
+    List<Long> findByProductIdAndIdGreaterThanOrderByIdAsc(Long productId, Long id);
 }

@@ -26,4 +26,8 @@ public class SubscriberService {
 
         return userIds;
     }
+
+    public List<Long> getUserIdsForProductException(Long productId, Long lastSentUserId) {
+        return subscriptionRepository.findByProductIdAndIdGreaterThanOrderByIdAsc(productId, lastSentUserId);
+    }
 }
