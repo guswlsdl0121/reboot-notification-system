@@ -10,4 +10,6 @@ public interface Cache<K, V> {
     void remove(K key);
 
     Map<K, V> getAll();
+
+    void clear();
 }

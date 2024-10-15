@@ -30,4 +30,9 @@ public class HistoryCache implements Cache<Long, NotificationHistory> {
     public Map<Long, NotificationHistory> getAll() {
         return new ConcurrentHashMap<>(cache);
     }
+
+    @Override
+    public void clear() {
+        cache.clear();
+    }
 }

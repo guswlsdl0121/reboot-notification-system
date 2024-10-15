@@ -48,6 +48,15 @@ public class HistoryCacheRepository implements CacheRepository<Long, Notificatio
         for (Map.Entry<Long, NotificationHistory> entry : allCachedHistories.entrySet()) {
             dbRepository.save(entry.getValue());
         }
-        cache.getAll().clear();
+        cache.clear();
+    }
+
+    public NotificationHistory updateLastReceiver(Long productId, Long userId) {
+        NotificationHistory history = get(productId);
+        if (history != null) {
+            history.updateLastReceiver(userId);
+            save(productId, history);
+        }
+        return history;
     }
 }

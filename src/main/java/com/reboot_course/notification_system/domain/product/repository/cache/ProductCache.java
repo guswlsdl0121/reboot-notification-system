@@ -27,6 +27,11 @@ public class ProductCache implements Cache<Long, Product> {
     }
 
     @Override
+    public void clear() {
+        cache.clear();
+    }
+
+    @Override
     public Map<Long, Product> getAll() {
         return new ConcurrentHashMap<>(cache);
     }

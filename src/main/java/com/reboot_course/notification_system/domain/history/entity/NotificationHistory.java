@@ -28,9 +28,31 @@ public class NotificationHistory {
     private LocalDateTime createdAt;
 
     private Long lastSendUserId;
+
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Product product;
+
+    public Long getProductId() {
+        return this.product.getId();
+    }
+
+    public void updateLastReceiver(Long userId) {
+        this.lastSendUserId = userId;
+    }
+
+    public boolean isSoldOut() {
+        return this.notificationStatus == NotificationStatus.CANCELED_BY_SOLD_OUT;
+    }
+
+    public void determineStatus() {
+        if (product.getQuantity() < 1) {
+            this.notificationStatus = NotificationStatus.CANCELED_BY_SOLD_OUT;
+            return;
+        }
+
+        this.notificationStatus = NotificationStatus.IN_PROGRESS;
+    }
 
     public void completed() {
         this.notificationStatus = NotificationStatus.COMPLETED;
@@ -40,7 +62,7 @@ public class NotificationHistory {
         this.notificationStatus = NotificationStatus.CANCELED_BY_ERROR;
     }
 
-    public Long getProductId() {
-        return this.product.getId();
+    public void cancelBySoldOut() {
+        this.notificationStatus = NotificationStatus.CANCELED_BY_SOLD_OUT;
     }
 }
