@@ -1,7 +1,7 @@
 package com.reboot_course.notification_system.domain.product.repository.cache;
 
-import com.reboot_course.notification_system.common.cache.Cache;
 import com.reboot_course.notification_system.domain.product.entity.Product;
+import com.reboot_course.notification_system.infra.cache.Cache;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

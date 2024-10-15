@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.common.ratelimit;
+package com.reboot_course.notification_system.infra.ratelimit;
 
 @FunctionalInterface
 public interface RateLimiter {

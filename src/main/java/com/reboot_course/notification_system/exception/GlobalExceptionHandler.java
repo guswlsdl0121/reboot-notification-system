@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.common.exception;
+package com.reboot_course.notification_system.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

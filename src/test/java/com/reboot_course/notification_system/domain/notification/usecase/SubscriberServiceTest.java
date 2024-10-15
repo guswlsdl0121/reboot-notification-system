@@ -4,7 +4,7 @@ import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import com.reboot_course.notification_system.domain.subscriber.entity.Subscriber;
 import com.reboot_course.notification_system.domain.subscriber.repository.SubscriberRepository;
-import com.reboot_course.notification_system.domain.subscriber.usecase.SubscriberService;
+import com.reboot_course.notification_system.domain.subscriber.service.SubscriberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.common.cache;
+package com.reboot_course.notification_system.infra.cache;
 
 import java.util.Map;
 

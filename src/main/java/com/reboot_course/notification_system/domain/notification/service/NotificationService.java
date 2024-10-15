@@ -1,8 +1,9 @@
 package com.reboot_course.notification_system.domain.notification.service;
 
-import com.reboot_course.notification_system.domain.notification.entity.NotificationHistory;
-import com.reboot_course.notification_system.domain.notification.entity.NotificationStatus;
-import com.reboot_course.notification_system.domain.notification.usecase.NotificationHistoryService;
+import com.reboot_course.notification_system.domain.history.entity.NotificationHistory;
+import com.reboot_course.notification_system.domain.history.entity.NotificationStatus;
+import com.reboot_course.notification_system.domain.history.service.NotificationHistoryService;
+import com.reboot_course.notification_system.external.NotificationManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

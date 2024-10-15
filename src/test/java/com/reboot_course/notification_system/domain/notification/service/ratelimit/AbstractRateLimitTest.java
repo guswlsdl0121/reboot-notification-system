@@ -1,10 +1,10 @@
 package com.reboot_course.notification_system.domain.notification.service.ratelimit;
 
-import com.reboot_course.notification_system.domain.notification.service.NotificationServiceFacade;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import com.reboot_course.notification_system.domain.subscriber.entity.Subscriber;
 import com.reboot_course.notification_system.domain.subscriber.repository.SubscriberRepository;
+import com.reboot_course.notification_system.service.NotificationSystemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +26,7 @@ public abstract class AbstractRateLimitTest {
     protected SubscriberRepository subscriptionRepository;
 
     @Autowired
-    protected NotificationServiceFacade notificationServiceFacade;
+    protected NotificationSystemService notificationSystemService;
 
     protected Product createAndSaveProduct() {
         Product product = Product.builder().quantity(100).restockVersion(0).build();

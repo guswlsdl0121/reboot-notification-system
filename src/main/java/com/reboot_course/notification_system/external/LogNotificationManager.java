@@ -1,6 +1,6 @@
-package com.reboot_course.notification_system.domain.notification.service;
+package com.reboot_course.notification_system.external;
 
-import com.reboot_course.notification_system.domain.notification.entity.NotificationHistory;
+import com.reboot_course.notification_system.domain.history.entity.NotificationHistory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

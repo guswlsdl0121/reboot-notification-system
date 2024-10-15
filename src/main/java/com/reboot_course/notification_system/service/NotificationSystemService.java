@@ -1,10 +1,11 @@
-package com.reboot_course.notification_system.domain.notification.service;
+package com.reboot_course.notification_system.service;
 
-import com.reboot_course.notification_system.common.ratelimit.RateLimiter;
-import com.reboot_course.notification_system.common.ratelimit.TaskProcessor;
+import com.reboot_course.notification_system.domain.notification.service.NotificationService;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.service.ProductService;
-import com.reboot_course.notification_system.domain.subscriber.usecase.SubscriberService;
+import com.reboot_course.notification_system.domain.subscriber.service.SubscriberService;
+import com.reboot_course.notification_system.infra.ratelimit.RateLimiter;
+import com.reboot_course.notification_system.infra.ratelimit.TaskProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class NotificationServiceFacade {
+public class NotificationSystemService {
     private final RateLimiter rateLimiter;
 
     private final ProductService productService;

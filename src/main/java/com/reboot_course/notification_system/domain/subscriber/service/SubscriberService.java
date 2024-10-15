@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.subscriber.usecase;
+package com.reboot_course.notification_system.domain.subscriber.service;
 
 import com.reboot_course.notification_system.domain.subscriber.entity.Subscriber;
 import com.reboot_course.notification_system.domain.subscriber.repository.SubscriberRepository;

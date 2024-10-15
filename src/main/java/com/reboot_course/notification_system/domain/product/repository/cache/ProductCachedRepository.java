@@ -1,9 +1,9 @@
 package com.reboot_course.notification_system.domain.product.repository.cache;
 
-import com.reboot_course.notification_system.common.cache.Cache;
-import com.reboot_course.notification_system.common.cache.CacheRepository;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
+import com.reboot_course.notification_system.infra.cache.Cache;
+import com.reboot_course.notification_system.infra.cache.CacheRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ProductCachedRepository implements CacheRepository<Long, Product> {
     private final Cache<Long, Product> cache;
-    private final ProductRepository productRepository;
+    private final ProductRepository dbRepository;
 
     @Override
     public void save(Long key, Product product) {
@@ -30,7 +30,7 @@ public class ProductCachedRepository implements CacheRepository<Long, Product> {
     public Product get(Long key) {
         Product product = cache.get(key);
         if (product == null) {
-            product = productRepository.findById(key).orElse(null);
+            product = dbRepository.findById(key).orElse(null);
             if (product != null) {
                 save(key, product);
             }
@@ -55,7 +55,7 @@ public class ProductCachedRepository implements CacheRepository<Long, Product> {
         Map<Long, Product> cachedProducts = cache.getAll();
         List<Long> productIds = new ArrayList<>(cachedProducts.keySet());
 
-        List<Product> dbProducts = productRepository.findAllById(productIds);
+        List<Product> dbProducts = dbRepository.findAllById(productIds);
 
         for (Product product : dbProducts) {
             cache.set(product.getId(), product);

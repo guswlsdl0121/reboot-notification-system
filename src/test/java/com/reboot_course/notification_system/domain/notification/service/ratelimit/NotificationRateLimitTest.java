@@ -14,7 +14,7 @@ class NotificationRateLimitTest extends AbstractRateLimitTest {
         Product product = createAndSaveProduct();
         createSubscriptions(product, 600);
 
-        long duration = executeTest(() -> notificationServiceFacade.sendNotifications(product.getId()));
+        long duration = executeTest(() -> notificationSystemService.sendNotifications(product.getId()));
 
         assertDuration(duration, 1000);
     }
@@ -38,10 +38,10 @@ class NotificationRateLimitTest extends AbstractRateLimitTest {
         createSubscriptions(product4, 800);
 
         long duration = executeTest(() -> {
-            notificationServiceFacade.sendNotifications(product1.getId());
-            notificationServiceFacade.sendNotifications(product2.getId());
-            notificationServiceFacade.sendNotifications(product3.getId());
-            notificationServiceFacade.sendNotifications(product4.getId());
+            notificationSystemService.sendNotifications(product1.getId());
+            notificationSystemService.sendNotifications(product2.getId());
+            notificationSystemService.sendNotifications(product3.getId());
+            notificationSystemService.sendNotifications(product4.getId());
         });
 
         assertDuration(duration, 3000, 800);

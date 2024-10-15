@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.notification.entity;
+package com.reboot_course.notification_system.domain.history.entity;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import jakarta.persistence.*;

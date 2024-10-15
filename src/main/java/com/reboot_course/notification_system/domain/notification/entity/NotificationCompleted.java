@@ -1,5 +1,6 @@
 package com.reboot_course.notification_system.domain.notification.entity;
 
+import com.reboot_course.notification_system.domain.history.entity.NotificationHistory;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,9 +1,9 @@
-package com.reboot_course.notification_system.domain.notification.usecase;
+package com.reboot_course.notification_system.domain.history.service;
 
 
-import com.reboot_course.notification_system.domain.notification.entity.NotificationHistory;
-import com.reboot_course.notification_system.domain.notification.entity.NotificationStatus;
-import com.reboot_course.notification_system.domain.notification.repository.NotificationHistoryRepository;
+import com.reboot_course.notification_system.domain.history.entity.NotificationHistory;
+import com.reboot_course.notification_system.domain.history.entity.NotificationStatus;
+import com.reboot_course.notification_system.domain.history.repository.db.NotificationHistoryRepository;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.cache.ProductCachedRepository;
 import lombok.RequiredArgsConstructor;
