@@ -25,7 +25,6 @@ public class BatchQueueRepository {
         List<NotificationCompleted> completedNotifications = batchQueue.getAll();
         if (!completedNotifications.isEmpty()) {
             notificationCompletedRepository.saveAll(completedNotifications);
-            batchQueue.clear();
         }
     }
 

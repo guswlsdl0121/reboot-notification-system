@@ -27,7 +27,7 @@ public class CompletedNotificationService {
         return batchQueueRepository.getAll();
     }
 
-    public void saveAndClearCompletedNotifications() {
+    public void saveAll() {
         batchQueueRepository.saveAndClear();
     }
 }

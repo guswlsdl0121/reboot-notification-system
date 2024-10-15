@@ -5,6 +5,7 @@ import com.reboot_course.notification_system.domain.history.service.Notification
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.service.ProductService;
 import com.reboot_course.notification_system.domain.subscriber.service.SubscriberService;
+import com.reboot_course.notification_system.domain.usernotification.service.CompletedNotificationService;
 import com.reboot_course.notification_system.exception.NotificationException;
 import com.reboot_course.notification_system.infra.cache.NotificationCacheManager;
 import com.reboot_course.notification_system.infra.ratelimit.RateLimiter;
@@ -26,6 +27,7 @@ public class NotificationSystemService {
     private final SubscriberService subscriberService;
     private final NotificationService notificationService;
     private final NotificationHistoryService historyService;
+    private final CompletedNotificationService completedNotificationService;
 
     public void sendNotifications(Long productId) {
         Product product = productService.fetchOneAndUpdateRestockCount(productId);
@@ -36,11 +38,12 @@ public class NotificationSystemService {
 
     public void resendRestockNotification(Long productId) {
         Product product = productService.fetchOne(productId);
-        NotificationHistory errorHistory = historyService.getLastErrorHistory(productId);
-        Long lastSentUserId = errorHistory.getLastSendUserId();
-        List<Long> remainingUserIds = subscriberService.getUserIdsForProductException(productId, lastSentUserId);
 
-        processNotifications(product, remainingUserIds);
+        NotificationHistory errorHistory = historyService.getLastErrorHistory(productId);
+        Long lastSentUser = errorHistory.getLastSendUserId();
+
+        List<Long> remainingUsers = subscriberService.getUserIdsForProductException(productId, lastSentUser);
+        processNotifications(product, remainingUsers);
     }
 
     private void processNotifications(Product product, List<Long> userIds) {
@@ -55,6 +58,7 @@ public class NotificationSystemService {
             log.error("failed for product: {}, user: {}, status: {}", product.getId(), e.getLastUserId(), e.getStatus(), e);
 
         } finally {
+            completedNotificationService.saveAll();
             cacheManager.finalizeProcess(product.getId());
         }
     }
