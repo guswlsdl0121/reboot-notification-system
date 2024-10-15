@@ -1,9 +1,10 @@
-package com.reboot_course.notification_system.domain.usernotification.service;
+package com.reboot_course.notification_system.domain.usernotification;
 
 import com.reboot_course.notification_system.domain.history.entity.NotificationHistory;
 import com.reboot_course.notification_system.domain.usernotification.entity.NotificationCompleted;
 import com.reboot_course.notification_system.domain.usernotification.repository.cache.BatchQueueRepository;
 import com.reboot_course.notification_system.domain.usernotification.repository.db.NotificationCompletedRepository;
+import com.reboot_course.notification_system.domain.usernotification.service.CompletedNotificationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

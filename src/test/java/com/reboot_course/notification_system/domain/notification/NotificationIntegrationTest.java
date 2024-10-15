@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.usernotification.service.ratelimit;
+package com.reboot_course.notification_system.domain.notification;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.*;
 
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class NotificationRateLimitTest extends AbstractRateLimitTest {
+class NotificationIntegrationTest extends AbstractRateLimitTest {
     @Test
     @Order(1)
     @DisplayName("한 개 요청 : 600명의 사용자에 대해 알림을 전송하려 한다면, 최소 1초 + @의 시간이 든다.")

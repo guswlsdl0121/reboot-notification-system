@@ -60,6 +60,7 @@ public class NotificationSystemService {
         } finally {
             completedNotificationService.saveAll();
             cacheManager.finalizeProcess(product.getId());
+
         }
     }
 }

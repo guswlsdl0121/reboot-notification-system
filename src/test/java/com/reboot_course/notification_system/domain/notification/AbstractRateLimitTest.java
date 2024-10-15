@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.usernotification.service.ratelimit;
+package com.reboot_course.notification_system.domain.notification;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
@@ -6,9 +6,12 @@ import com.reboot_course.notification_system.domain.subscriber.entity.Subscriber
 import com.reboot_course.notification_system.domain.subscriber.repository.SubscriberRepository;
 import com.reboot_course.notification_system.service.NotificationSystemService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.util.StopWatch;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +31,11 @@ public abstract class AbstractRateLimitTest {
     @Autowired
     protected NotificationSystemService notificationSystemService;
 
+    @AfterEach
+    public void tearDown() {
+        subscriptionRepository.deleteAll();
+    }
+
     protected Product createAndSaveProduct() {
         Product product = Product.builder().quantity(100).restockVersion(0).build();
         return productRepository.save(product);
@@ -44,11 +52,12 @@ public abstract class AbstractRateLimitTest {
         }
     }
 
-    long executeTest(Runnable task) {
-        long startNano = System.nanoTime();
+    protected long executeTest(Runnable task) {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         task.run();
-        long endNano = System.nanoTime();
-        return TimeUnit.NANOSECONDS.toMillis(endNano - startNano);
+        stopWatch.stop();
+        return stopWatch.getTotalTimeMillis();
     }
 
     protected void assertDuration(long duration, long expectedMinimumDuration) {
