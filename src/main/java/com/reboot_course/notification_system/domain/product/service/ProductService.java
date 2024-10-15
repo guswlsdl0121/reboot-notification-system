@@ -25,6 +25,7 @@ public class ProductService {
 
         product.updateRestockVersion();
         productCachedRepository.save(productId, product);
+
         return product;
     }
 }

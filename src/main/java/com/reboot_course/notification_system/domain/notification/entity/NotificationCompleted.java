@@ -3,6 +3,7 @@ package com.reboot_course.notification_system.domain.notification.entity;
 import com.reboot_course.notification_system.domain.history.entity.NotificationHistory;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -23,8 +24,6 @@ public class NotificationCompleted {
     @Column(nullable = false)
     private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "product_notification_history_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private NotificationHistory notificationHistory;
-
+    @Column(nullable = false)
+    private Integer restockVersion = 0;
 }

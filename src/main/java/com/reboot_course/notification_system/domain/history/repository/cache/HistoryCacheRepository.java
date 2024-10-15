@@ -24,7 +24,7 @@ public class HistoryCacheRepository implements CacheRepository<Long, Notificatio
     public NotificationHistory get(Long key) {
         NotificationHistory history = cache.get(key);
         if (history == null) {
-            history = dbRepository.findByProductId(key).orElse(null);
+            history = dbRepository.findByProduct_Id(key).orElse(null);
             if (history != null) {
                 cache.set(key, history);
             }

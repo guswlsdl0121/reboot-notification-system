@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface NotificationHistoryRepository extends CrudRepository<NotificationHistory, Long> {
-    Optional<NotificationHistory> findByProductId(Long productId);
+    Optional<NotificationHistory> findByProduct_Id(Long productId);
 }

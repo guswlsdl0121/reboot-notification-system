@@ -1,43 +1,38 @@
-DROP TABLE IF EXISTS product_user_notification_history;
-DROP TABLE IF EXISTS product_notification_history;
-DROP TABLE IF EXISTS product_user_notification;
-DROP TABLE IF EXISTS product;
-
-
-CREATE TABLE IF NOT EXISTS product
+create table product
 (
-    id              BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    created_at      DATETIME(6)           NOT NULL,
-    quantity        INT                   NOT NULL,
-    restock_version INT                   NOT NULL
+    quantity        int         not null,
+    restock_version int         not null,
+    created_at      datetime(6) not null,
+    id              bigint auto_increment primary key
 );
 
-CREATE TABLE IF NOT EXISTS product_notification_history
+create table product_notification_history
 (
-    id                BIGINT AUTO_INCREMENT                                                          NOT NULL PRIMARY KEY,
-    created_at        DATETIME(6)                                                                    NOT NULL,
-    restock_version   INT                                                                            NOT NULL,
-    status            ENUM ('CANCELED_BY_ERROR', 'CANCELED_BY_SOLD_OUT', 'COMPLETED', 'IN_PROGRESS') NOT NULL,
-    last_send_user_id BIGINT                                                                         NOT NULL,
-    product_id        BIGINT                                                                         NOT NULL,
-    INDEX idx_pnh_pid (product_id)
+    restock_version   int                                                                            not null,
+    created_at        datetime(6)                                                                    not null,
+    id                bigint auto_increment
+        primary key,
+    last_send_user_id bigint                                                                         null,
+    product_id        bigint                                                                         not null,
+    status            enum ('CANCELED_BY_ERROR', 'CANCELED_BY_SOLD_OUT', 'COMPLETED', 'IN_PROGRESS') not null
 );
 
-CREATE TABLE IF NOT EXISTS product_user_notification
+create table product_user_notification
 (
-    id         BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    created_at DATETIME(6)           NOT NULL,
-    user_id    BIGINT                NOT NULL,
-    product_id BIGINT                NOT NULL,
-    UNIQUE KEY uk_pun_uid_pid (user_id, product_id),
-    INDEX idx_pun_pid (product_id)
+    is_active  bit         not null,
+    created_at datetime(6) not null,
+    id         bigint auto_increment
+        primary key,
+    product_id bigint      not null,
+    updated_at datetime(6) not null,
+    user_id    bigint      not null
 );
 
-CREATE TABLE IF NOT EXISTS product_user_notification_history
+create table product_user_notification_history
 (
-    id                              BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    created_at                      DATETIME(6)           NOT NULL,
-    user_id                         BIGINT                NOT NULL,
-    product_notification_history_id BIGINT                NOT NULL,
-    INDEX idx_punh_pnhid (product_notification_history_id)
+    restock_version int         not null,
+    created_at      datetime(6) not null,
+    id              bigint auto_increment
+        primary key,
+    user_id         bigint      not null
 );
