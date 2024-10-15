@@ -1,10 +1,11 @@
-package com.reboot_course.notification_system.domain.history.service;
+package com.reboot_course.notification_system.domain.history;
 
 import com.reboot_course.notification_system.domain.history.entity.NotificationHistory;
 import com.reboot_course.notification_system.domain.history.entity.NotificationStatus;
 import com.reboot_course.notification_system.domain.history.repository.cache.HistoryCache;
 import com.reboot_course.notification_system.domain.history.repository.cache.HistoryCacheRepository;
 import com.reboot_course.notification_system.domain.history.repository.db.NotificationHistoryRepository;
+import com.reboot_course.notification_system.domain.history.service.NotificationHistoryService;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.cache.ProductCachedRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -90,7 +91,30 @@ class NotificationHistoryIntegrationServiceTest {
     }
 
     @Test
-    @DisplayName("알림이 중간에 예외로 멈추면, 캐시에서 히스토리를 지우고 DB에 저장해야 한다.")
+    @DisplayName("알림이 중간에 재고부족으로 멈추면, CANCELED_BY_SOLD_OUT 상태로 저장해야 한다.")
+    void testSaveErrorWhenSoldOut() {
+        // Given
+        NotificationHistory history = notificationHistoryService.getOrCreateHistory(testProduct.getId(), 100L);
+
+        // When
+        notificationHistoryService.saveError(testProduct.getId(), 200L, NotificationStatus.CANCELED_BY_SOLD_OUT);
+
+        // Then
+        NotificationHistory savedHistory = notificationHistoryRepository.findByProduct_Id(testProduct.getId()).orElse(null);
+        assertNotNull(savedHistory);
+        assertEquals(NotificationStatus.CANCELED_BY_SOLD_OUT, savedHistory.getNotificationStatus());
+        assertEquals(200L, savedHistory.getLastSendUserId());
+        assertNull(historyCache.get(savedHistory.getId()));
+
+        // 실제 리포지토리 확인
+        NotificationHistory repoHistory = notificationHistoryRepository.findById(history.getId()).orElse(null);
+        assertNotNull(repoHistory);
+        assertEquals(NotificationStatus.CANCELED_BY_SOLD_OUT, repoHistory.getNotificationStatus());
+        assertEquals(200L, repoHistory.getLastSendUserId());
+    }
+
+    @Test
+    @DisplayName("알림이 중간에 예외로 멈추면, CANCELED_BY_ERROR 상태로 저장해야 한다.")
     void testSaveError() {
         // Given
         NotificationHistory history = notificationHistoryService.getOrCreateHistory(testProduct.getId(), 100L);
