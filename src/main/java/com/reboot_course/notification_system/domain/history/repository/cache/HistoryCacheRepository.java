@@ -37,20 +37,6 @@ public class HistoryCacheRepository implements CacheRepository<Long, Notificatio
         cache.remove(key);
     }
 
-    @Override
-    public Map<Long, NotificationHistory> getAll() {
-        return cache.getAll();
-    }
-
-    @Override
-    public void syncWithDB() {
-        Map<Long, NotificationHistory> allCachedHistories = cache.getAll();
-        for (Map.Entry<Long, NotificationHistory> entry : allCachedHistories.entrySet()) {
-            dbRepository.save(entry.getValue());
-        }
-        cache.clear();
-    }
-
     public NotificationHistory updateLastReceiver(Long productId, Long userId) {
         NotificationHistory history = get(productId);
         if (history != null) {
@@ -58,5 +44,9 @@ public class HistoryCacheRepository implements CacheRepository<Long, Notificatio
             save(productId, history);
         }
         return history;
+    }
+
+    public void clear(){
+        cache.clear();
     }
 }

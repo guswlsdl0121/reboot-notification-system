@@ -4,6 +4,7 @@ import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.cache.ProductCache;
 import com.reboot_course.notification_system.domain.product.repository.cache.ProductCachedRepository;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@Import({ProductCache.class, ProductCachedRepository.class})
 class ProductCacheRepositoryTest {
 
     @Autowired
@@ -25,6 +25,7 @@ class ProductCacheRepositoryTest {
     private ProductCachedRepository productCachedRepository;
 
     @Test
+    @DisplayName("스케쥴러를 통해서 캐시가 변경된 수량을 잘 가져오는지 확인")
     void t1() throws InterruptedException {
         // 제품 초기화
         Product product = Product.builder()

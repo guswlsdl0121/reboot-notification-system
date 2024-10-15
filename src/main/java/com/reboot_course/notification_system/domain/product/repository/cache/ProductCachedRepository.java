@@ -43,12 +43,7 @@ public class ProductCachedRepository implements CacheRepository<Long, Product> {
         cache.remove(key);
     }
 
-    @Override
-    public Map<Long, Product> getAll() {
-        return cache.getAll();
-    }
 
-    @Override
     @Scheduled(fixedRate = 100)
     @Transactional
     public void syncWithDB() {
@@ -60,5 +55,9 @@ public class ProductCachedRepository implements CacheRepository<Long, Product> {
         for (Product product : dbProducts) {
             cache.set(product.getId(), product);
         }
+    }
+
+    public void clear() {
+        cache.clear();
     }
 }
