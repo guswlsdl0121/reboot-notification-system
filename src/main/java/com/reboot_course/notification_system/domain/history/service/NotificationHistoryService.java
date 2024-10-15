@@ -62,7 +62,7 @@ public class NotificationHistoryService {
     }
 
     public NotificationHistory getLastErrorHistory(Long productId) {
-        return historyRepository.findByProductIdAndNotificationStatusIn(productId,
+        return historyRepository.findByProduct_IdAndNotificationStatusIn(productId,
                         Arrays.asList(NotificationStatus.CANCELED_BY_ERROR, NotificationStatus.CANCELED_BY_SOLD_OUT))
                 .orElseThrow(() -> new RuntimeException("재발송 할 대상이 없습니다!"));
     }

@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface NotificationHistoryRepository extends CrudRepository<NotificationHistory, Long> {
     Optional<NotificationHistory> findByProduct_Id(Long productId);
 
-    Optional<NotificationHistory> findByProductIdAndNotificationStatusIn(Long productId, List<NotificationStatus> list);
+    Optional<NotificationHistory> findByProduct_IdAndNotificationStatusIn(Long productId, List<NotificationStatus> list);
 }
