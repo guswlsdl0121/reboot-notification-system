@@ -24,10 +24,10 @@ public class NotificationHistoryService {
 
     public NotificationHistory getOrCreateHistory(Long productId, Long userId) {
         NotificationHistory history = historyCacheRepository.get(productId);
+
         if (history != null) {
             return historyCacheRepository.updateLastReceiver(productId, userId);
         }
-
         return createNewHistory(productId, userId);
     }
 
@@ -41,6 +41,7 @@ public class NotificationHistoryService {
 
     public void saveError(Long productId, Long lastUserId, NotificationStatus status) {
         NotificationHistory history = historyCacheRepository.get(productId);
+
         NotificationStatus.updateByException(status, history);
         history.updateLastReceiver(lastUserId);
         historyRepository.save(history);

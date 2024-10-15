@@ -1,9 +1,7 @@
-package com.reboot_course.notification_system.domain.notification.entity;
+package com.reboot_course.notification_system.domain.usernotification.entity;
 
-import com.reboot_course.notification_system.domain.history.entity.NotificationHistory;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 

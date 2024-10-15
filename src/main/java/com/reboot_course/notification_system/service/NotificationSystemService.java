@@ -1,11 +1,11 @@
 package com.reboot_course.notification_system.service;
 
 import com.reboot_course.notification_system.domain.history.service.NotificationHistoryService;
-import com.reboot_course.notification_system.domain.notification.service.NotificationService;
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.service.ProductService;
 import com.reboot_course.notification_system.domain.subscriber.service.SubscriberService;
 import com.reboot_course.notification_system.exception.NotificationException;
+import com.reboot_course.notification_system.infra.cache.NotificationCacheManager;
 import com.reboot_course.notification_system.infra.ratelimit.RateLimiter;
 import com.reboot_course.notification_system.infra.ratelimit.TaskProcessor;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NotificationSystemService {
     private final RateLimiter rateLimiter;
+    private final NotificationCacheManager cacheManager;
 
     private final ProductService productService;
     private final SubscriberService subscriberService;
@@ -29,14 +30,18 @@ public class NotificationSystemService {
         Product product = productService.fetchOneAndUpdateRestockCount(productId);
         List<Long> userIds = subscriberService.getUserIdsForProduct(productId);
 
+        cacheManager.initializeProcess(product);
         try {
-            rateLimiter.process(
-                    new TaskProcessor(product.getId(), userIds, notificationService::sendNotification)
-            );
+            TaskProcessor taskProcessor = new TaskProcessor(product.getId(), userIds, notificationService::sendNotification);
+            rateLimiter.process(taskProcessor);
             historyService.saveCompleted(productId);
+
         } catch (NotificationException e) {
             historyService.saveError(productId, e.getLastUserId(), e.getStatus());
             log.error("Notification failed for product: {}, user: {}, status: {}", productId, e.getLastUserId(), e.getStatus(), e);
+
+        } finally {
+            cacheManager.finalizeProcess(productId);
         }
     }
 }

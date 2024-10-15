@@ -7,12 +7,13 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
-    defer-datasource-initialization: true
-    open-in-view: false
+      ddl-auto: update
 
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:ddl.sql
-      data-locations: classpath:dml.sql
+#    defer-datasource-initialization: true
+#    open-in-view: false
+#
+#  sql:
+#    init:
+#      mode: always
+#      schema-locations: classpath:ddl.sql
+#      data-locations: classpath:dml.sql

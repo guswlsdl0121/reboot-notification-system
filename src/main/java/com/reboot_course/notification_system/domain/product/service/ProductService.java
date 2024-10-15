@@ -1,7 +1,6 @@
 package com.reboot_course.notification_system.domain.product.service;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
-import com.reboot_course.notification_system.domain.product.repository.cache.ProductCachedRepository;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productDBRepository;
-    private final ProductCachedRepository productCachedRepository;
 
     @Transactional
     public Product fetchOneAndUpdateRestockCount(Long productId) {
@@ -24,8 +22,6 @@ public class ProductService {
         }
 
         product.updateRestockVersion();
-        productCachedRepository.save(productId, product);
-
         return product;
     }
 }

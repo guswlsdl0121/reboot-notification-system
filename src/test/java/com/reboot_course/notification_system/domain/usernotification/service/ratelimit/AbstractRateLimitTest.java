@@ -1,4 +1,4 @@
-package com.reboot_course.notification_system.domain.notification.service.ratelimit;
+package com.reboot_course.notification_system.domain.usernotification.service.ratelimit;
 
 import com.reboot_course.notification_system.domain.product.entity.Product;
 import com.reboot_course.notification_system.domain.product.repository.db.ProductRepository;
