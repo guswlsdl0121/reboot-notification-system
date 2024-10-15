@@ -1,38 +1,42 @@
-create table product
+CREATE TABLE product
 (
-    quantity        int         not null,
-    restock_version int         not null,
-    created_at      datetime(6) not null,
-    id              bigint auto_increment primary key
+    id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+    quantity        INT         NOT NULL,
+    restock_version INT         NOT NULL,
+    created_at      DATETIME(6) NOT NULL,
+    INDEX idx_product_restock_version (restock_version),
+    INDEX idx_product_quantity (quantity)
 );
 
-create table product_notification_history
+CREATE TABLE product_notification_history
 (
-    restock_version   int                                                                            not null,
-    created_at        datetime(6)                                                                    not null,
-    id                bigint auto_increment
-        primary key,
-    last_send_user_id bigint                                                                         null,
-    product_id        bigint                                                                         not null,
-    status            enum ('CANCELED_BY_ERROR', 'CANCELED_BY_SOLD_OUT', 'COMPLETED', 'IN_PROGRESS') not null
+    id                BIGINT AUTO_INCREMENT PRIMARY KEY,
+    product_id        BIGINT                                                                         NOT NULL,
+    restock_version   INT                                                                            NOT NULL,
+    status            ENUM ('CANCELED_BY_ERROR', 'CANCELED_BY_SOLD_OUT', 'COMPLETED', 'IN_PROGRESS') NOT NULL,
+    last_send_user_id BIGINT                                                                         NULL,
+    created_at        DATETIME(6)                                                                    NOT NULL,
+    INDEX idx_notification_history_product_id (product_id),
+    INDEX idx_notification_history_product_status (product_id, status)
 );
 
-create table product_user_notification
+CREATE TABLE product_user_notification
 (
-    is_active  bit         not null,
-    created_at datetime(6) not null,
-    id         bigint auto_increment
-        primary key,
-    product_id bigint      not null,
-    updated_at datetime(6) not null,
-    user_id    bigint      not null
+    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+    product_id BIGINT      NOT NULL,
+    user_id    BIGINT      NOT NULL,
+    is_active  BIT         NOT NULL,
+    created_at DATETIME(6) NOT NULL,
+    updated_at DATETIME(6) NOT NULL,
+    INDEX idx_subscriber_product_id_created_at (product_id, created_at),
+    INDEX idx_subscriber_product_id_id (product_id, id)
 );
 
-create table product_user_notification_history
+CREATE TABLE product_user_notification_history
 (
-    restock_version int         not null,
-    created_at      datetime(6) not null,
-    id              bigint auto_increment
-        primary key,
-    user_id         bigint      not null
+    id              BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id         BIGINT      NOT NULL,
+    restock_version INT         NOT NULL,
+    created_at      DATETIME(6) NOT NULL,
+    INDEX idx_notification_completed_created_at (created_at)
 );
