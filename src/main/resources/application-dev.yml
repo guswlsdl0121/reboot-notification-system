@@ -8,4 +8,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    open-in-view: false
+
+#    defer-datasource-initialization: true
+#    open-in-view: false
+#
+#  sql:
+#    init:
+#      mode: always
+#      schema-locations: classpath:ddl.sql
+#      data-locations: classpath:dml.sql
